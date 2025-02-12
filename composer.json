@@ -1,0 +1,70 @@
+{
+    "name": "elfeffe/medialibrary",
+    "description": "This is my package medialibrary",
+    "keywords": [
+        "elfeffe",
+        "laravel",
+        "medialibrary"
+    ],
+    "homepage": "https://github.com/elfeffe/medialibrary",
+    "support": {
+        "issues": "https://github.com/elfeffe/medialibrary/issues",
+        "source": "https://github.com/elfeffe/medialibrary"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Federico",
+            "email": "elfeffe@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "filament/filament": "^3.0",
+        "spatie/laravel-package-tools": "^1.15.0"
+    },
+    "require-dev": {
+        "nunomaduro/collision": "^7.9",
+        "orchestra/testbench": "^8.0",
+        "pestphp/pest": "^2.1",
+        "pestphp/pest-plugin-arch": "^2.0",
+        "pestphp/pest-plugin-laravel": "^2.0",
+        "spatie/laravel-ray": "^1.26"
+    },
+    "autoload": {
+        "psr-4": {
+            "Elfeffe\\Medialibrary\\": "src/",
+            "Elfeffe\\Medialibrary\\Database\\Factories\\": "database/factories/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Elfeffe\\Medialibrary\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": "@php ./vendor/bin/testbench package:discover --ansi",
+        "test": "vendor/bin/pest",
+        "test-coverage": "vendor/bin/pest --coverage"
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "phpstan/extension-installer": true
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Elfeffe\\Medialibrary\\MedialibraryServiceProvider"
+            ],
+            "aliases": {
+                "Medialibrary": "Elfeffe\\Medialibrary\\Facades\\Medialibrary"
+            }
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
