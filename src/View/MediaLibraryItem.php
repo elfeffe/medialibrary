@@ -19,7 +19,7 @@ class MediaLibraryItem extends Component
      *
      * @return void
      */
-    public function __construct($id, $width = 256, $height = 256, $type = 'resize', $name = '')
+    public function __construct($id, $width = 256, $height = 256, $type = 'resize', $name = 'image')
     {
         $this->id = $id;
         $this->item = MediaLibrary::find($id);
