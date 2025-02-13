@@ -26,7 +26,6 @@ class MediaLibrary extends Model implements HasMedia
 
     public function getItem(string $collection = 'default'): Media
     {
-        ray($this->getMedia());
         return $this->getFirstMedia($collection);
     }
 }
