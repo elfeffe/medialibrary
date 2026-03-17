@@ -2,28 +2,30 @@
 
 namespace Elfeffe\Medialibrary\Resources;
 
+use BackedEnum;
 use Elfeffe\Medialibrary\Models\MediaLibrary;
 use Elfeffe\Medialibrary\Resources\MediaLibraryResource\Pages\CreateMediaLibrary;
 use Elfeffe\Medialibrary\Resources\MediaLibraryResource\Pages\EditMediaLibrary;
 use Elfeffe\Medialibrary\Resources\MediaLibraryResource\Pages\ListMediaLibraries;
 use Filament\Forms;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
-use Filament\Tables\Table;
 use Filament\Tables;
+use Filament\Tables\Table;
+use UnitEnum;
 
 class MediaLibraryResource extends Resource
 {
     protected static ?string $model = MediaLibrary::class;
 
-    protected static ?string $navigationGroup = 'Media';
+    protected static string | UnitEnum | null $navigationGroup = 'Media';
 
-    protected static ?string $navigationIcon = 'heroicon-o-photo';
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-photo';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 Forms\Components\SpatieMediaLibraryFileUpload::make('media')
                     ->columnSpan(2)
                     ->image()

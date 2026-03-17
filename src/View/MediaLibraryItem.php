@@ -1,4 +1,5 @@
 <?php
+
 namespace Elfeffe\Medialibrary\View;
 
 use Elfeffe\Medialibrary\Models\MediaLibrary;
@@ -7,11 +8,17 @@ use Illuminate\View\Component;
 class MediaLibraryItem extends Component
 {
     public $id;
+
     public $item;
+
     public $media;
+
     public $width;
+
     public $height;
+
     public $type;
+
     public $name;
 
     /**
@@ -23,7 +30,7 @@ class MediaLibraryItem extends Component
     {
         $this->id = $id;
         $this->item = MediaLibrary::find($id);
-        $this->media = $this->item->getItem();
+        $this->media = $this->item ? $this->item->getItem() : null;
         $this->width = $width;
         $this->height = $height;
         $this->type = $type;

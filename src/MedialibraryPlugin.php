@@ -19,8 +19,7 @@ class MedialibraryPlugin implements Plugin
         $panel
             ->resources([
                 MediaLibraryResource::class,
-            ])
-        ;
+            ]);
     }
 
     public function boot(Panel $panel): void

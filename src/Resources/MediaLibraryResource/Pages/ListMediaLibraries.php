@@ -3,7 +3,7 @@
 namespace Elfeffe\Medialibrary\Resources\MediaLibraryResource\Pages;
 
 use Elfeffe\Medialibrary\Resources\MediaLibraryResource;
-use Filament\Pages\Actions;
+use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 
 class ListMediaLibraries extends ListRecords
@@ -13,7 +13,7 @@ class ListMediaLibraries extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            CreateAction::make(),
         ];
     }
 }

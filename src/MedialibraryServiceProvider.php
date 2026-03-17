@@ -2,19 +2,17 @@
 
 namespace Elfeffe\Medialibrary;
 
+use Elfeffe\Medialibrary\Commands\MedialibraryCommand;
 use Elfeffe\Medialibrary\View\MediaLibraryItem;
 use Filament\Support\Assets\Asset;
 use Filament\Support\Assets\Css;
 use Filament\Support\Assets\Js;
 use Filament\Support\Facades\FilamentAsset;
 use Filament\Support\Facades\FilamentIcon;
-use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Blade;
-use Livewire\Features\SupportTesting\Testable;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Elfeffe\Medialibrary\Commands\MedialibraryCommand;
 
 class MedialibraryServiceProvider extends PackageServiceProvider
 {
@@ -63,12 +61,12 @@ class MedialibraryServiceProvider extends PackageServiceProvider
     public function packageBooted(): void
     {
         Blade::component('media-library-item', MediaLibraryItem::class);
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'medialibrary');
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'medialibrary');
 
-        app()->config["filesystems.disks.medialibrary"] = [
+        app()->config['filesystems.disks.medialibrary'] = [
             'driver' => 'local',
             'root' => storage_path('app/public/media'),
-            'url' => config('app.url') . '/storage/media',
+            'url' => config('app.url').'/storage/media',
             'visibility' => 'public',
         ];
 
@@ -89,7 +87,7 @@ class MedialibraryServiceProvider extends PackageServiceProvider
         // Handle Stubs
         if (app()->runningInConsole()) {
             $this->publishes([
-                __DIR__ . '/../database/migrations/create_medialibrary_table.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_medialibrary_table.php'),
+                __DIR__.'/../database/migrations/create_medialibrary_table.php.stub' => database_path('migrations/'.date('Y_m_d_His', time()).'_create_medialibrary_table.php'),
             ], 'medialibrary-migrations');
         }
 
@@ -108,8 +106,8 @@ class MedialibraryServiceProvider extends PackageServiceProvider
     {
         return [
             // AlpineComponent::make('medialibrary', __DIR__ . '/../resources/dist/components/medialibrary.js'),
-            //Css::make('medialibrary-styles', __DIR__ . '/../resources/dist/medialibrary.css'),
-            //Js::make('medialibrary-scripts', __DIR__ . '/../resources/dist/medialibrary.js'),
+            // Css::make('medialibrary-styles', __DIR__ . '/../resources/dist/medialibrary.css'),
+            // Js::make('medialibrary-scripts', __DIR__ . '/../resources/dist/medialibrary.js'),
         ];
     }
 
