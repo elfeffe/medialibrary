@@ -88,6 +88,7 @@ class MedialibraryServiceProvider extends PackageServiceProvider
         if (app()->runningInConsole()) {
             $this->publishes([
                 __DIR__.'/../database/migrations/create_medialibrary_table.php.stub' => database_path('migrations/'.date('Y_m_d_His', time()).'_create_medialibrary_table.php'),
+                __DIR__.'/../database/migrations/add_tenant_id_to_medialibrary_table.php.stub' => database_path('migrations/'.date('Y_m_d_His', time() + 1).'_add_tenant_id_to_medialibrary_table.php'),
             ], 'medialibrary-migrations');
         }
 

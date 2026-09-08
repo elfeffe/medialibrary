@@ -57,3 +57,7 @@ Use the package resource/plugin for centralized admin management, and prefer Spa
 - Keep media management inside the package resource/plugin when possible.
 - Reuse the model methods and existing Filament resource patterns.
 - Search Laravel / Filament docs with Boost before guessing syntax around uploads, media fields, and resources.
+
+## Tenant ownership (optional)
+
+Set `MEDIALIBRARY_TENANT_MODEL=App\Models\Tenant` (or `medialibrary.tenant_model`) and publish/run the `add_tenant_id_to_medialibrary_table` migration. `MediaLibrary::tenant()` then resolves, so a Filament resource in a tenant panel can keep `$isScopedToTenant = true` with the default `tenant` ownership relationship. Leave the config null for single-tenant projects; the column stays nullable.

@@ -30,4 +30,11 @@ class MediaLibrary extends Model implements HasMedia
     {
         return $this->getFirstMedia($collection);
     }
+
+    public function tenant(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        $model = config('medialibrary.tenant_model') ?: \Illuminate\Database\Eloquent\Model::class;
+
+        return $this->belongsTo($model, 'tenant_id');
+    }
 }
