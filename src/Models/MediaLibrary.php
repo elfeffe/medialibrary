@@ -26,7 +26,14 @@ class MediaLibrary extends Model implements HasMedia
         });
     }
 
-    public function getItem(string $collection = 'default'): Media
+    /**
+     * The first media in a collection, or null when the row has none.
+     *
+     * A MediaLibrary row legitimately exists without a file — created directly,
+     * or mid-upload — so this mirrors getFirstMedia()'s own nullability rather
+     * than promising a Media that isn't there.
+     */
+    public function getItem(string $collection = 'default'): ?Media
     {
         return $this->getFirstMedia($collection);
     }
