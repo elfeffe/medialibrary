@@ -1,26 +1,22 @@
 ---
 name: medialibrary-development
-description: Build and use the elfeffe/medialibrary package, including the MediaLibrary model, Filament resource integration, and Spatie Media Library workflows. Use when working with centralized media management, media uploads, media browsing, or the medialibrary package.
+description: Build and use the elfeffe/medialibrary package, including the MediaLibrary model, Filament resource integration, and Spatie Media Library workflows.
 ---
 
 # Medialibrary Development
 
-Use this skill when working on `elfeffe/medialibrary` or integrating its media library into Filament.
+Use this skill when working on `elfeffe/medialibrary` or integrating the package into a Filament panel.
 
-## Boost discovery
+## Main package pieces
 
-- Third-party Boost skills are discovered from `resources/boost/skills/{skill-name}/SKILL.md`.
-- After installing `elfeffe/medialibrary`, users can run `php artisan boost:install` to have Boost discover this package skill.
-- Use `php artisan boost:update` after package updates if Boost resources need refreshing.
+| Class / file | Purpose |
+|---|---|
+| `Models\MediaLibrary` | Central media model |
+| `Resources\MediaLibraryResource` | Filament CRUD resource |
+| `MedialibraryPlugin` | Registers the package resource in a panel |
+| `MedialibraryServiceProvider` | Package bootstrap |
 
-## Installation
-
-```bash
-composer require elfeffe/medialibrary
-php artisan boost:install
-```
-
-Register the Filament plugin:
+## Installation and registration
 
 ```php
 ->plugins([
@@ -28,16 +24,15 @@ Register the Filament plugin:
 ])
 ```
 
-## Main pieces
+## Model behavior
 
-| Class / Symbol | Purpose |
-|---|---|
-| `Models\MediaLibrary` | Central media model |
-| `Resources\MediaLibraryResource` | Filament CRUD resource |
-| `MedialibraryPlugin` | Filament plugin |
-| `MedialibraryServiceProvider` | Auto-discovered service provider |
+`MediaLibrary`:
+- Uses `InteractsWithMedia`
+- Uses `Elfeffe\ImageResizer\Traits\HasImageResizer`
+- Stores records in the `media_library` table
+- Fills `uploaded_by_user_id` automatically on create when a user is authenticated
 
-## Core usage
+Typical usage:
 
 ```php
 use Elfeffe\Medialibrary\Models\MediaLibrary;
@@ -45,18 +40,27 @@ use Elfeffe\Medialibrary\Models\MediaLibrary;
 $item = MediaLibrary::find(1);
 $item->getItem('default');
 $item->getMedia('default');
+$item->getMediaHtml($item->getItem('default'), 800, 600, 'resize');
 ```
 
-## Filament usage
+## Filament resource patterns
 
-Use the package resource/plugin for centralized admin management, and prefer Spatie Media Library fields when integrating uploads.
+The package resource currently uses:
+- `SpatieMediaLibraryFileUpload::make('media')`
+- `TextInput::make('caption')`
+- `TextInput::make('alt_text')`
+- `SpatieMediaLibraryImageColumn::make('media')`
+
+Navigation defaults:
+- Group: `Media`
+- Icon: `heroicon-o-photo`
 
 ## Best practices
 
-- Use Spatie Media Library flows instead of custom upload handling.
-- Keep media management inside the package resource/plugin when possible.
-- Reuse the model methods and existing Filament resource patterns.
-- Search Laravel / Filament docs with Boost before guessing syntax around uploads, media fields, and resources.
+- Prefer the package model/resource instead of building a parallel media table
+- Use Spatie Media Library flows instead of custom upload pipelines
+- Reuse `HasImageResizer` output helpers when the UI needs optimized media HTML or URLs
+- Search Laravel, Filament, Spatie Media Library, and package docs before changing upload or resource syntax
 
 ## Tenant ownership (optional)
 
