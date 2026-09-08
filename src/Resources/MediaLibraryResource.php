@@ -7,6 +7,8 @@ use Elfeffe\Medialibrary\Models\MediaLibrary;
 use Elfeffe\Medialibrary\Resources\MediaLibraryResource\Pages\CreateMediaLibrary;
 use Elfeffe\Medialibrary\Resources\MediaLibraryResource\Pages\EditMediaLibrary;
 use Elfeffe\Medialibrary\Resources\MediaLibraryResource\Pages\ListMediaLibraries;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
 use Filament\Forms;
 use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
@@ -50,11 +52,11 @@ class MediaLibraryResource extends Resource
             ->filters([
                 //
             ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
+            ->recordActions([
+                EditAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(),
+            ->toolbarActions([
+                DeleteBulkAction::make(),
             ]);
     }
 
