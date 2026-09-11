@@ -6,6 +6,7 @@ namespace Elfeffe\Medialibrary\Livewire;
 
 use Elfeffe\Medialibrary\Forms\Components\MediaLibraryPicker;
 use Elfeffe\Medialibrary\Models\MediaLibrary;
+use Filament\Notifications\Notification;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\View\View;
 use Livewire\Attributes\Computed;
@@ -76,6 +77,11 @@ class PickerBrowser extends Component
         }
 
         if ($this->max > 0 && count($this->selected) >= $this->max) {
+            Notification::make()
+                ->title(__('medialibrary::picker.max_reached', ['max' => $this->max]))
+                ->warning()
+                ->send();
+
             return;
         }
 

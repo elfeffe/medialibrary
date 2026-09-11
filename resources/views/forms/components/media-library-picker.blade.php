@@ -27,6 +27,7 @@
             >
                 @foreach ($previews as $preview)
                     <li
+                        wire:key="{{ $modalId }}-chip-{{ $preview['id'] }}"
                         x-sort:item="{{ $preview['id'] }}"
                         class="group relative size-20 cursor-grab overflow-hidden rounded-lg ring-1 ring-gray-950/10 dark:ring-white/10"
                     >
@@ -35,7 +36,7 @@
                             type="button"
                             x-on:click="$wire.set(@js($statePath), @js(array_values(array_diff($ids, [$preview['id']]))))"
                             class="absolute right-1 top-1 hidden rounded-full bg-gray-950/70 p-0.5 text-white group-hover:block"
-                            aria-label="{{ __('Remove') }}"
+                            aria-label="{{ __('medialibrary::picker.remove') }}"
                         >
                             <x-filament::icon icon="heroicon-m-x-mark" class="size-3.5" />
                         </button>
@@ -46,22 +47,24 @@
 
         <div class="flex items-center gap-3">
             <x-filament::button color="gray" icon="heroicon-m-photo" x-on:click="$dispatch('open-modal', { id: @js($modalId) })">
-                {{ __('Choose from library') }}
+                {{ __('medialibrary::picker.choose_from_library') }}
             </x-filament::button>
 
             @if ($uploadUrl)
                 <a href="{{ $uploadUrl }}" target="_blank" class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-400">
-                    {{ __('Upload to library') }}
+                    {{ __('medialibrary::picker.upload_to_library') }}
                 </a>
             @endif
         </div>
 
-        <x-filament::modal :id="$modalId" width="5xl" :heading="__('Media library')">
+        <x-filament::modal :id="$modalId" width="5xl" :heading="__('medialibrary::picker.heading')">
+            {{-- lazy: the browser queries the library when the modal opens, not on every form render. --}}
             <livewire:medialibrary.picker-browser
                 :field-id="$statePath"
                 :max="$getMaxItems()"
                 :selected="$ids"
                 wire:key="{{ $modalId }}-browser-{{ implode('-', $ids) }}"
+                lazy
             />
         </x-filament::modal>
     </div>

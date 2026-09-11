@@ -99,13 +99,6 @@ class MediaLibraryPicker extends Field
      */
     public static function normalizeIds(mixed $state): array
     {
-        if (! is_array($state)) {
-            return [];
-        }
-
-        return array_values(array_unique(array_map(
-            'intval',
-            array_filter($state, static fn (mixed $id): bool => is_numeric($id) && (int) $id > 0),
-        )));
+        return MediaIds::normalize($state);
     }
 }

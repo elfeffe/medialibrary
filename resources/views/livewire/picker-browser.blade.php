@@ -1,6 +1,6 @@
 <div class="space-y-4">
     <x-filament::input.wrapper prefix-icon="heroicon-m-magnifying-glass">
-        <x-filament::input type="search" wire:model.live.debounce.300ms="search" :placeholder="__('Search by caption')" />
+        <x-filament::input type="search" wire:model.live.debounce.300ms="search" :placeholder="__('medialibrary::picker.search_placeholder')" />
     </x-filament::input.wrapper>
 
     <div class="grid grid-cols-3 gap-3 sm:grid-cols-4 lg:grid-cols-6">
@@ -30,7 +30,7 @@
                 @endif
             </button>
         @empty
-            <p class="col-span-full py-10 text-center text-sm text-gray-500 dark:text-gray-400">{{ __('No images in the library yet.') }}</p>
+            <p class="col-span-full py-10 text-center text-sm text-gray-500 dark:text-gray-400">{{ __('medialibrary::picker.empty') }}</p>
         @endforelse
     </div>
 
@@ -38,7 +38,7 @@
 
     <div class="flex justify-end">
         <x-filament::button wire:click="confirm">
-            {{ __('Use :count selected', ['count' => count($selected)]) }}
+            {{ __('medialibrary::picker.confirm', ['count' => count($selected)]) }}
         </x-filament::button>
     </div>
 </div>
