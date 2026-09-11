@@ -37,3 +37,11 @@ $item->getMedia('default');
 - Use Spatie Media Library APIs for storage and retrieval.
 - Reuse package resource patterns for admin management.
 - Avoid custom upload pipelines when package + Spatie features already cover the use case.
+
+## Choosing library media in another form: `MediaLibraryPicker`
+
+`Elfeffe\Medialibrary\Forms\Components\MediaLibraryPicker::make('meta.examples')->multiple()->maxItems(8)` stores an ordered `list<int>` of `MediaLibrary` ids. The form shows reorderable, removable thumbnails and a "Choose from library" button; the button opens a modal (`medialibrary.picker-browser`) with a paginated grid searchable by caption, multi-select in click order. Read the images back with `MediaLibrary::query()->whereKey($ids)` and `getItem()`, keeping the id order and skipping rows that no longer exist. `MediaLibraryPicker::normalizeIds()` is the one normaliser.
+
+## Disk
+
+`config('medialibrary.disk')` (env `MEDIALIBRARY_DISK`, default `medialibrary` = local public disk) is where the resource stores files. Point it at the app's object-storage disk instead of adding credentials.

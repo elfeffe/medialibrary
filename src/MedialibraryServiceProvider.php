@@ -3,6 +3,7 @@
 namespace Elfeffe\Medialibrary;
 
 use Elfeffe\Medialibrary\Commands\MedialibraryCommand;
+use Elfeffe\Medialibrary\Livewire\PickerBrowser;
 use Elfeffe\Medialibrary\View\MediaLibraryItem;
 use Filament\Support\Assets\Asset;
 use Filament\Support\Assets\Css;
@@ -10,6 +11,7 @@ use Filament\Support\Assets\Js;
 use Filament\Support\Facades\FilamentAsset;
 use Filament\Support\Facades\FilamentIcon;
 use Illuminate\Support\Facades\Blade;
+use Livewire\Livewire;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
@@ -60,6 +62,7 @@ class MedialibraryServiceProvider extends PackageServiceProvider
 
     public function packageBooted(): void
     {
+        Livewire::component('medialibrary.picker-browser', PickerBrowser::class);
         Blade::component('media-library-item', MediaLibraryItem::class);
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'medialibrary');
 

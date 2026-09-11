@@ -10,8 +10,8 @@ use Elfeffe\Medialibrary\Resources\MediaLibraryResource\Pages\ListMediaLibraries
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Forms;
-use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
 use UnitEnum;
@@ -20,9 +20,9 @@ class MediaLibraryResource extends Resource
 {
     protected static ?string $model = MediaLibrary::class;
 
-    protected static string | UnitEnum | null $navigationGroup = 'Media';
+    protected static string|UnitEnum|null $navigationGroup = 'Media';
 
-    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-photo';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-photo';
 
     public static function form(Schema $schema): Schema
     {
@@ -31,7 +31,7 @@ class MediaLibraryResource extends Resource
                 Forms\Components\SpatieMediaLibraryFileUpload::make('media')
                     ->columnSpan(2)
                     ->image()
-                    ->disk('medialibrary'),
+                    ->disk(config('medialibrary.disk', 'medialibrary')),
                 Forms\Components\TextInput::make('caption'),
                 Forms\Components\TextInput::make('alt_text'),
             ]);
@@ -45,7 +45,7 @@ class MediaLibraryResource extends Resource
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\SpatieMediaLibraryImageColumn::make('media')
-                    ->disk('medialibrary')
+                    ->disk(config('medialibrary.disk', 'medialibrary'))
                     ->square()
                     ->size(200),
             ])
