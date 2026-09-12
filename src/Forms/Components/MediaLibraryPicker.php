@@ -6,6 +6,7 @@ namespace Elfeffe\Medialibrary\Forms\Components;
 
 use Closure;
 use Elfeffe\Medialibrary\Models\MediaLibrary;
+use Elfeffe\Medialibrary\Support\MediaIds;
 use Filament\Forms\Components\Field;
 
 /**
