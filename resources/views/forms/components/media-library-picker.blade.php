@@ -46,7 +46,10 @@
         @endif
 
         <div class="flex items-center gap-3">
-            <x-filament::button color="gray" icon="heroicon-m-photo" x-on:click="$dispatch('open-modal', { id: @js($modalId) })">
+            {{-- The id is interpolated, not `@js()`: Blade passes a component's attribute
+                 through as a plain string and never expands directives inside it, so `@js`
+                 here reached the browser verbatim and Alpine died on it. --}}
+            <x-filament::button color="gray" icon="heroicon-m-photo" x-on:click="$dispatch('open-modal', { id: '{{ $modalId }}' })">
                 {{ __('medialibrary::picker.choose_from_library') }}
             </x-filament::button>
 
