@@ -4,6 +4,7 @@ namespace Elfeffe\Medialibrary\Models;
 
 use Elfeffe\ImageResizer\Traits\HasImageResizer;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Image\Enums\Fit;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -33,6 +34,18 @@ class MediaLibrary extends Model implements HasMedia
      * or mid-upload — so this mirrors getFirstMedia()'s own nullability rather
      * than promising a Media that isn't there.
      */
+    /**
+     * Small square tiles are drawn all over the apps — a picker row's example, a
+     * grid cell — and the library holds full-size originals, so it ships the tile
+     * itself rather than letting every page pull a megabyte to paint 40 pixels.
+     */
+    public function registerMediaConversions(?Media $media = null): void
+    {
+        $this->addMediaConversion('card')
+            ->fit(Fit::Crop, 96, 96)
+            ->format('webp');
+    }
+
     public function getItem(string $collection = 'default'): ?Media
     {
         return $this->getFirstMedia($collection);
