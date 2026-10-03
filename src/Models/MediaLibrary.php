@@ -2,6 +2,7 @@
 
 namespace Elfeffe\Medialibrary\Models;
 
+use Closure;
 use Elfeffe\ImageResizer\Traits\HasImageResizer;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Image\Enums\Fit;
@@ -17,6 +18,21 @@ class MediaLibrary extends Model implements HasMedia
     protected $table = 'media_library';
 
     protected $guarded = [];
+
+    /** @var array<string, Closure(self, ?Media): void> */
+    protected static array $conversionCallbacks = [];
+
+    /**
+     * Lets the app that owns the library add its own conversions to the tile
+     * this package ships. Keyed, so registering again replaces rather than
+     * stacks a second copy of the same conversions.
+     *
+     * @param  Closure(self, ?Media): void  $callback
+     */
+    public static function registerConversionsUsing(Closure $callback, string $key = 'app'): void
+    {
+        static::$conversionCallbacks[$key] = $callback;
+    }
 
     public static function boot()
     {
@@ -44,6 +60,10 @@ class MediaLibrary extends Model implements HasMedia
         $this->addMediaConversion('card')
             ->fit(Fit::Crop, 96, 96)
             ->format('webp');
+
+        foreach (static::$conversionCallbacks as $callback) {
+            $callback($this, $media);
+        }
     }
 
     public function getItem(string $collection = 'default'): ?Media
